@@ -39,10 +39,7 @@
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
+            <div class="navbar-header">               
                 <a class="navbar-brand page-scroll" href="index.php?action=default"><image src="img/devstorm.png" alt=""/></a>
             </div>
 

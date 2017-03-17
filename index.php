@@ -35,7 +35,9 @@
 </head>
 
 <body id="page-top">
-
+<?php
+ session_start();
+?>
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -65,6 +67,25 @@
                     <li>
                         <a class="page-scroll" href="index.php?action=professeurs">Professeurs</a>
                     </li>
+                    <?php 
+                       if (isset($_SESSION["user"])){
+                       	?>
+                       	  <li>
+	                        <a class="page-scroll" href="index.php?action=delog">Se déconnecter</a>
+	                    </li>
+	                    <?php
+	                	}
+                       	else
+                       	{
+                       	?>
+                       	    <li>
+                        <a class="page-scroll" href="index.php?action=login">Se connecter</a>
+                    </li>
+	                    <?php
+                       	}
+                       	?>
+                  
+                  
                     
                 </ul>
             </div>
@@ -87,27 +108,87 @@
         
         <div class="row">
             <?php
+            require 'pdo/userPdo.php';
+
+           
                 if (isset ($_GET["action"]))
                     {
                     switch($_GET["action"]) {
                         case "classeActuelle":
-                            include("vendor/classeActuelle.php");
+                            if (isset($_SESSION["user"])==0)
+                                {
+                                    include 'vendor/login.php';
+                                }
+                                else
+                                {
+                                    include 'vendor/classeActuelle.php';
+                                }
                             break;
                         case "historiqueColles":
-                            include("vendor/historiqueColles.php");
+                            if (isset($_SESSION["user"])==0)
+                                {
+                                    include 'vendor/login.php';
+                                }
+                                else
+                                {
+                                    include 'vendor/historiqueColles.php';
+                                }
                             break;
                         case "eleves":
-                            include("vendor/eleves.php");
+                            if (isset($_SESSION["user"])==0)
+                                {
+                                    include 'vendor/login.php';
+                                }
+                                else
+                                {
+                                    include 'vendor/eleves.php';
+                                };
                             break;
                         case "classes":
-                            include("vendor/classes.php");
+                            if (isset($_SESSION["user"])==0)
+                                {
+                                    include 'vendor/login.php';
+                                }
+                                else
+                                {
+                                    include 'vendor/classes.php';
+                                }
                             break;
                         case "sanctions":
-                            include ("vendor/sanctions.php");
+                            if (isset($_SESSION["user"])==0)
+                                {
+                                    include 'vendor/login.php';
+                                }
+                                else
+                                {
+                                    include 'vendor/sanctions.php';
+                                }
                             break;
                         case "professeurs":
-                            include ("vendor/professeurs.php");
+                            if (isset($_SESSION["user"])==0)
+                                {
+                                    include 'vendor/login.php';
+                                }
+                                else
+                                {
+                                    include 'vendor/professeurs.php';
+                                }
                             break;
+                        case "checkLogin":
+                                   $nb= verification($_POST["login"],sha1($_POST["password"]));
+                                   var_dump($nb);           
+                                    if ($res=1)
+                                    {
+                                        $_SESSION["user"]="test";
+                                        header("location:index.php?action=accueil");
+                                    }
+                        case "login":
+                            include ("vendor/login.php");
+                            break;
+                        case "delog":
+                        	session_destroy();
+                        	header("location:index.php?action=accueil");
+                        	break;
                         default:
                             include ("vendor/accueil.php");
                             break;
